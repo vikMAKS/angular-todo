@@ -1,0 +1,33 @@
+
+.done-true {
+    text-decoration: line-through;
+    color: grey;
+}
+#addMe {
+    border: 1px solid black;
+    height: 39px;
+    width: 350px;
+    border-radius: 50px;
+    outline: none;
+    text-align: center;
+    
+}
+#addMe:focus {
+    width: 386px;
+}
+button {
+    border: 0;
+    height: 39px;
+    width: 80px;
+    color: white;
+    outline: none;
+    background-color: dodgerblue;
+    border-radius:50px;
+}
+button:hover {
+    background-color: blue;
+    
+}
+.types {
+    display: inline ;
+}

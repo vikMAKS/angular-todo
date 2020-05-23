@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <!-- Responsive -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="style.css">
+    <!-- jQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <!-- JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<body>
+
+<script>
+var am = document.getElementById("addMe");
+var app = angular.module("myShoppingList", []); 
+app.controller("myCtrl", function($scope) {
+    $scope.products = [ {text: "Milk", done: false }, {text: "Bread", done: false }, {text: "Cheese", done: false }];
+    $scope.addItem = function () {
+        $scope.errortext = "";
+        if (!$scope.addMe) {return;}
+        if ($scope.products.indexOf($scope.addMe) == -1) {
+            $scope.products.push({ text: $scope.addMe, done: false });
+            $scope.errortext = "You just at an item";
+            $scope.remain = "Remaining: "+$scope.products.length;
+        } else {
+            $scope.errortext ="This item is already in your shopping list.";
+            $scope.reamin = "";
+        }
+    }
+    $scope.removeItem = function (x) {
+
+        $scope.products.splice(x, 1);
+        $scope.errortext = "You just removed an item ";
+        $scope.remain = "Remaining: "+$scope.products.length;
+    }
+    $scope.done = function (x) {
+        $scope.errortext = "You just bought one item";
+    }
+    $scope.complete = function (x) {
+         $scope.products = $scope.products.filter(items => items.done == true);
+    }
+    $scope.active = function (x) {
+        $scope.products = $scope.products.filter(items => items.done == false);
+    }
+     $scope.all = function (x) {
+        $scope.products = $scope.products = $scope.products.filter(items => items.done == true || items.done == false);
+    }
+}); 
+</script>
+
+<div ng-app="myShoppingList" ng-cloak ng-controller="myCtrl" class="w3-card-2 w3-margin" style="max-width:836px;">
+  <header class="w3-container w3-light-grey w3-padding-16">
+    <h3 align="center">My Shopping List</h3>
+  </header>
+  <ul class="w3-ul">
+    <li ng-repeat="x in products" class="w3-padding-16"><span class="done-{{x.done}}">{{x.text}}</span><span ng-click="removeItem($index)" style="cursor:pointer;" class="w3-right w3-margin-right">×</span><input type="checkbox" ng-click="done($index)" ng-model="x.done" style="cursor:pointer;" class="w3-right w3-margin-right"/>  
+  </ul>
+  <div class="w3-container w3-light-grey w3-padding-16">
+    <div class="w3-row w3-margin-top">
+      <div class="w3-col s10">
+        <input placeholder="Add shopping items here" ng-model="addMe"  id="addMe">
+      </div>
+      <div class="w3-col s2">
+        <button ng-click="addItem()">Add</button>
+      </div>
+    </div>
+    <div class="types">
+    <p class="w3-text-green">{{errortext}}</p>
+    <p class="w3-text-green">{{remain}}</p>
+    <br><br><br>
+    <p ng-click="complete()">completed</p><p ng-click="active()"> active</p><p ng-click="all()"> all</p>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
